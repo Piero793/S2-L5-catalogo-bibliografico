@@ -3,7 +3,7 @@ package it.epicode.prove;
 import it.epicode.classi.Archivio;
 import it.epicode.classi.Libri;
 import it.epicode.classi.Riviste;
-import it.epicode.interfacce.Periodicita;
+import it.epicode.helper.Periodicita;
 
 import java.util.List;
 

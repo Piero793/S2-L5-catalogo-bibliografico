@@ -1,6 +1,6 @@
 package it.epicode.classi;
 
-import it.epicode.interfacce.Periodicita;
+import it.epicode.helper.Periodicita;
 
 public class Riviste extends Biblioteca {
     private Periodicita periodicita;
@@ -8,9 +8,6 @@ public class Riviste extends Biblioteca {
     public Riviste(String isbn, String titolo, int annoPubblicazione, int numeroPagine, Periodicita periodicita) {
         super(isbn, titolo, annoPubblicazione, numeroPagine);
         this.periodicita = periodicita;
-    }
-
-    public Riviste() {
     }
 
     public Periodicita getPeriodicita() {
