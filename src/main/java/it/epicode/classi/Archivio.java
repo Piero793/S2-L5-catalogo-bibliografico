@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Archivio {
-    private List<Biblioteca> catalogo;
+    private final List<Biblioteca> catalogo;
 
     public Archivio() {
         this.catalogo = new ArrayList<>();
@@ -54,23 +54,21 @@ public class Archivio {
     }
 
     // Metodo per cercare elementi per anno di pubblicazione
-    public List<Biblioteca> cercaPerAnnoPubblicazione(int annoPubblicazione) {
+    public void cercaPerAnnoPubblicazione(int annoPubblicazione) {
         List<Biblioteca> risultati = catalogo.stream()
                 .filter(e -> e.getAnnoPubblicazione() == annoPubblicazione)
-                .collect(Collectors.toList());
+                .toList();
         System.out.println("Elementi trovati per anno di pubblicazione (" + annoPubblicazione + "): " + risultati);
-        return risultati;
     }
 
     // Metodo per cercare libri per autore
-    public List<Libri> cercaPerAutore(String autore) {
+    public void cercaPerAutore(String autore) {
         List<Libri> risultati = catalogo.stream()
                 .filter(e -> e instanceof Libri)
                 .map(e -> (Libri) e)
                 .filter(libro -> libro.getAutore().equalsIgnoreCase(autore))
-                .collect(Collectors.toList());
+                .toList();
         System.out.println("Libri trovati per autore (" + autore + "): " + risultati);
-        return risultati;
     }
 
     // Metodo per aggiornare un elemento dato l'ISBN
@@ -106,7 +104,7 @@ public class Archivio {
                     .orElse(0);
 
             // arrotondo la media pagine come numero intero
-            double mediaPagineArrotondata = Math.floor(mediaPagine);
+            double mediaPagineArrotondata = (int) Math.floor(mediaPagine);   //non lo prende nel main ????
 
             // Stampa delle statistiche
             System.out.println("Statistiche del catalogo:");
@@ -117,9 +115,10 @@ public class Archivio {
             } else {
                 System.out.println("- Nessun elemento trovato nel catalogo.");
             }
-            System.out.println("- Media delle pagine di tutti gli elementi: " + mediaPagine);
+            System.out.println("- Media delle pagine di tutti gli elementi: " + mediaPagineArrotondata);
         } catch (Exception e) {
             System.out.println("Errore durante il calcolo delle statistiche: " + e.getMessage());
         }
+
     }
 }
