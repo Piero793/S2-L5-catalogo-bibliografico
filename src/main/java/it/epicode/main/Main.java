@@ -2,37 +2,40 @@ package it.epicode.main;
 
 import it.epicode.classi.*;
 import it.epicode.helper.Periodicita;
+import it.epicode.colori.Colori;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Scanner;
 
 public class Main {
+    private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) {
         Archivio archivio = new Archivio();
         Scanner scanner = new Scanner(System.in);
         boolean continua = true;
 
-        System.out.println("----------------------------------------");
-        System.out.println("Benvenuto nel catalogo della biblioteca!");
-        System.out.println("----------------------------------------");
+        logger.info(Colori.VERDE.colora("Benvenuto nel catalogo della biblioteca!"));
 
         while (continua) {
             try {
-                System.out.println("\nCosa vuoi fare? Seleziona un'opzione:");
-                System.out.println("---------------------------------------");
-                System.out.println("1. Aggiungi elemento");
-                System.out.println("2. Cerca elemento per ISBN");
-                System.out.println("3. Rimuovi elemento per ISBN");
-                System.out.println("4. Cerca elementi per anno di pubblicazione");
-                System.out.println("5. Cerca libri per autore");
-                System.out.println("6. Aggiorna elemento");
-                System.out.println("7. Mostra statistiche catalogo");
-                System.out.println("8. Esci");
+                System.out.println(Colori.BLU.colora("\nCosa vuoi fare? Seleziona un'opzione:"));
+                System.out.println(Colori.BLU.colora("---------------------------------------"));
+                System.out.println(Colori.GIALLO.colora("1. Aggiungi elemento"));
+                System.out.println(Colori.GIALLO.colora("2. Cerca elemento per ISBN"));
+                System.out.println(Colori.GIALLO.colora("3. Rimuovi elemento per ISBN"));
+                System.out.println(Colori.GIALLO.colora("4. Cerca elementi per anno di pubblicazione"));
+                System.out.println(Colori.GIALLO.colora("5. Cerca libri per autore"));
+                System.out.println(Colori.GIALLO.colora("6. Aggiorna elemento"));
+                System.out.println(Colori.GIALLO.colora("7. Mostra statistiche catalogo"));
+                System.out.println(Colori.GIALLO.colora("8. Esci"));
 
                 int scelta = Integer.parseInt(scanner.nextLine());
 
                 switch (scelta) {
                     case 1:
-                        System.out.println("Stai aggiungendo un elemento. È un libro o una rivista? premi L per libro o R per rivista");
+                        System.out.println(Colori.BLU.colora("Stai aggiungendo un elemento. È un libro o una rivista? premi L per libro o R per rivista"));
                         String tipo = scanner.nextLine().toUpperCase();
 
                         System.out.print("Inserisci ISBN: ");
@@ -64,14 +67,14 @@ public class Main {
                             try {
                                 periodicita = Periodicita.valueOf(periodicitaInput);
                             } catch (IllegalArgumentException e) {
-                                System.out.println("Errore: Periodicità non valida. Usa MENSILE, SETTIMANALE o SEMESTRALE.");
+                                logger.error(Colori.ROSSO.colora("Errore: Periodicità non valida. Usa MENSILE, SETTIMANALE o SEMESTRALE."));
                                 break;
                             }
 
                             Riviste rivista = new Riviste(isbn, titolo, annoPubblicazione, numeroPagine, periodicita);
                             archivio.aggiungiElemento(rivista);
                         } else {
-                            System.out.println("Tipo non valido.");
+                            logger.error(Colori.ROSSO.colora("Tipo non valido."));
                         }
                         break;
 
@@ -121,18 +124,19 @@ public class Main {
                         break;
 
                     case 8:
-                        System.out.println("Uscita dal programma. Arrivederci!");
+                        logger.info(Colori.VERDE.colora("Uscita dal programma. Arrivederci!"));
                         continua = false;
                         break;
 
                     default:
-                        System.out.println("Scelta non valida, riprova.");
+                        logger.error(Colori.ROSSO.colora("Scelta non valida, riprova."));
                 }
             } catch (Exception e) {
-                System.out.println("Errore: " + e.getMessage());
+                logger.error(Colori.ROSSO.colora("Errore: {}"), e.getMessage(), e);
             }
         }
 
         scanner.close();
     }
 }
+
